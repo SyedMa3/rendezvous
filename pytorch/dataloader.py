@@ -248,7 +248,7 @@ class SarasDataset(Dataset):
         self.classes = label_data["categories"]["triplet"]
 
         self.img_dir = img_dir
-        self.transform = get_transform()
+        self.transform = self.get_transform()
         self.images = [os.path.join(root_dir, img) for img in os.listdir(root_dir)]
         
     def __len__(self):
