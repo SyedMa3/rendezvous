@@ -249,7 +249,7 @@ class SarasDataset(Dataset):
         self.normalize = True
         self.img_dir = img_dir
         self.transform = self.get_transform()
-        self.images = [os.path.join(root_dir, img) for img in os.listdir(root_dir)]
+        self.images = [os.path.join(img_dir, img) for img in os.listdir(img_dir)]
         
     def __len__(self):
         return len(self.frames)
