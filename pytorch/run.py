@@ -283,12 +283,14 @@ def test_loop(dataloader, model, activation, final_eval=False):
             color = (0, 255, 0)  # Green color for text
             text = f'Predicted Class: {predicted_class}'
             position = (10, 30)
+
+            img_np = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             
             cv2.putText(img_np, text, position, font, font_scale, color, font_thickness)
 
             # Save the image with the predicted class
             save_path = f'predicted_image_{batch}.jpg'
-            cv2.imwrite(save_path, cv2.cvtColor(np.uint8(img_np * 255), cv2.COLOR_RGB2BGR))
+            cv2.imwrite(save_path)
 
 
             ############################################
