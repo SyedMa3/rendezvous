@@ -347,7 +347,7 @@ def infer_loop(dataloader, model, activation, final_eval=False):
             # Convert the PyTorch tensor to a NumPy array
             file_name = images[batch]
             # file_name = file_name[:-len(frames[batch])] + frames[batch] + ".png"
-            img_np = cv2.imread(f'test/{file_name}')
+            img_np = cv2.imread(f'{file_name}')
             
             # Draw the predicted class on the image
             font = cv2.FONT_HERSHEY_SIMPLEX
