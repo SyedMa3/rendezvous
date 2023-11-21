@@ -274,7 +274,7 @@ def test_loop(dataloader, model, activation, final_eval=False):
             predicted_class = classes[str(predicted_class.item())]  # Get the predicted class index
             
             # Convert the PyTorch tensor to a NumPy array
-            img_np = img.squeeze().permute(1, 2, 0).cpu().numpy()
+            img_np = img.squeeze().cpu().numpy()
             
             # Draw the predicted class on the image
             font = cv2.FONT_HERSHEY_SIMPLEX
