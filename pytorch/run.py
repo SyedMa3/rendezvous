@@ -296,7 +296,7 @@ def test_loop(dataloader, model, activation, final_eval=False):
             img_np = img_np.copy()
             
             cv2.putText(img_np, text, position, font, font_scale, color, font_thickness)
-            cv2.putText(img_np, original_text, (150, 30), font, font_scale, color, font_thickness)
+            cv2.putText(img_np, original_text, (10, 100), font, font_scale, color, font_thickness)
 
 
             # Save the image with the predicted class
