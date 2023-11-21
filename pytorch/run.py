@@ -263,6 +263,7 @@ def test_loop(dataloader, model, activation, final_eval=False):
         mAPi.reset() 
     with torch.no_grad():
         for batch, (img, (y1, y2, y3, y4)) in enumerate(dataloader):
+            img_np = img
             img, y1, y2, y3, y4 = img.cuda(), y1.cuda(), y2.cuda(), y3.cuda(), y4.cuda()            
             model.eval()  
             tool, verb, target, triplet = model(img)
@@ -274,7 +275,7 @@ def test_loop(dataloader, model, activation, final_eval=False):
             predicted_class = classes[str(predicted_class.item())]  # Get the predicted class index
             
             # Convert the PyTorch tensor to a NumPy array
-            img_np = img.squeeze().permute(1, 2, 0).cpu().numpy()
+            # img_np = img.squeeze().permute(1, 2, 0).cpu().numpy()
             # print(img_np.shape)
             
             # Draw the predicted class on the image
