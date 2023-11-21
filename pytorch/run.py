@@ -574,7 +574,7 @@ if is_test:
 
 if is_infer:
     print("Test weight used: ", test_ckpt)
-    model.load_state_dict(torch.load(test_ckpt)
+    model.load_state_dict(torch.load(test_ckpt))
     infer_loop(infer_dataloader, model, activation, final_eval=True)
 
 #%% End
