@@ -252,7 +252,7 @@ class SarasDataset(Dataset):
         self.images = [os.path.join(img_dir, img) for img in os.listdir(img_dir)]
         
     def __len__(self):
-        return len(self.frames)
+        return len(self.images)
     
     def __getitem__(self, index):        
         img_path = self.images[idx]
