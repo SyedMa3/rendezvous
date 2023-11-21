@@ -254,7 +254,7 @@ def train_loop(dataloader, model, activation, loss_fn_i, loss_fn_v, loss_fn_t, l
 def test_loop(dataloader, model, activation, final_eval=False):
     size = len(dataloader.dataset)
     num_batches = len(dataloader)
-    classes = dataloader.classes
+    classes = dataloader.dataset.classes
     mAP.reset()  
     if final_eval and not set_chlg_eval:
         mAPv.reset() 
