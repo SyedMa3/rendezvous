@@ -289,13 +289,13 @@ def test_loop(dataloader, model, activation, final_eval=False):
             color = (0, 255, 0)  # Green color for text
             text = f'Predicted Class: {predicted_class}'
             original_text = f'Original Class: {original_class}'
-            position = (100, 30)
+            position = (10, 30)
 
             # img_np = cv2.cvtColor(img_np, cv2.COLOR_BGR2RGB)
             img_np = img_np.copy()
             
             cv2.putText(img_np, text, position, font, font_scale, color, font_thickness)
-            cv2.putText(img_np, original_text, position, font, font_scale, color, font_thickness)
+            cv2.putText(img_np, original_text, (150, 30), font, font_scale, color, font_thickness)
 
 
             # Save the image with the predicted class
