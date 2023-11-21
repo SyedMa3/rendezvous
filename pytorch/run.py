@@ -253,7 +253,8 @@ def train_loop(dataloader, model, activation, loss_fn_i, loss_fn_v, loss_fn_t, l
 
 def test_loop(dataloader, model, activation, final_eval=False):
     size = len(dataloader.dataset)
-    num_batches = len(dataloader)   
+    num_batches = len(dataloader)
+    classes = dataloader.classes
     mAP.reset()  
     if final_eval and not set_chlg_eval:
         mAPv.reset() 
@@ -267,24 +268,21 @@ def test_loop(dataloader, model, activation, final_eval=False):
 
 
             ############################################
-            triplet_info = triplet.cpu().numpy()
-
-            img_np = img.squeeze().cpu().numpy()
-        
-            # Scale the values in triplet_info to the range [0, 255] for display
-            triplet_info_display = (triplet_info - np.min(triplet_info)) / (np.max(triplet_info) - np.min(triplet_info)) * 255
-
-            # Convert triplet_info_display to uint8
-            triplet_info_display = triplet_info_display.astype(np.uint8)
-
-            # Resize triplet_info_display to match the image size
-            triplet_info_display_resized = cv2.resize(triplet_info_display, (img_np.shape[1], img_np.shape[0]))
-
-            # Stack the image and the triplet_info_display_resized horizontally
-            output_img = np.hstack((img_np, triplet_info_display_resized))
-
-            # Add text annotation to the image
+            # Assuming triplet is a tensor of shape (batch_size, num_classes)
+            _, predicted_class = torch.max(triplet, 1)
+            predicted_class = classes[str(predicted_class.item())]  # Get the predicted class index
+            
+            # Convert the PyTorch tensor to a NumPy array
+            img_np = img.squeeze().permute(1, 2, 0).cpu().numpy()
+            
+            # Draw the predicted class on the image
             font = cv2.FONT_HERSHEY_SIMPLEX
+            font_scale = 1
+            font_thickness = 2
+            color = (0, 255, 0)  # Green color for text
+            text = f'Predicted Class: {predicted_class}'
+            position = (10, 30)
+            
             cv2.putText(output_img, f'Triplet: {triplet_info}', (10, 30), font, 1, (255, 255, 255), 2, cv2.LINE_AA)
 
             # Save the image
