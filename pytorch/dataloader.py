@@ -242,5 +242,33 @@ class T50(Dataset):
             labels = self.target_transform(labels)
         return image, labels
 
+class SarasDataset(Dataset):
+    def __init__(self, img_dir, label_file, transform=None, target_transform=None):
+        label_data = json.load(open(label_file, "rb"))
+        self.classes = label_data["categories"]["triplet"]
+
+        self.img_dir = img_dir
+        self.transform = get_transform()
+        self.images = [os.path.join(root_dir, img) for img in os.listdir(root_dir)]
+        
+    def __len__(self):
+        return len(self.frames)
+    
+    def __getitem__(self, index):        
+        img_path = self.images[idx]
+        image    = Image.open(img_path)
+        if self.transform:
+            image = self.transform(image)
+        return image
+
+    def get_transform(self):
+        normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+        op_test   = [transforms.Resize((256, 448)), transforms.ToTensor(), ]
+        if self.normalize:
+            op_test.append(normalize)
+            op_train.append(normalize)
+        testform  = transforms.Compose(op_test)
+        return testform
+
 if __name__ == "__main__":
     print("Refers to https://github.com/CAMMA-public/cholect45 for the usage guide.")

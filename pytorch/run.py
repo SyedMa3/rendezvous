@@ -322,6 +322,53 @@ def test_loop(dataloader, model, activation, final_eval=False):
         mAPi.video_end()
 
 
+def infer_loop(dataloader, model, activation, final_eval=False):
+    size = len(dataloader.dataset)
+    num_batches = len(dataloader)
+    classes = dataloader.dataset.classes
+    with torch.no_grad():
+        for batch, (img, (y1, y2, y3, y4)) in enumerate(dataloader):
+            # img_np = img
+            img= img.cuda()            
+            model.eval()  
+            tool, verb, target, triplet = model(img)
+
+
+            ############################################
+            # Assuming triplet is a tensor of shape (batch_size, num_classes)
+            _, predicted_class = torch.max(triplet, 1)
+            _, original_class = torch.max(y4, 1)
+            predicted_class = classes[str(predicted_class.item())]  # Get the predicted class index
+            original_class = classes[str(original_class.item())]
+
+            # Convert the PyTorch tensor to a NumPy array
+            file_name = "0"*6
+            file_name = file_name[:-len(frames[batch])] + frames[batch] + ".png"
+            img_np = cv2.imread(f'cholect50-challenge-val/videos/VID68/{file_name}')
+            
+            # Draw the predicted class on the image
+            font = cv2.FONT_HERSHEY_SIMPLEX
+            font_scale = 1
+            font_thickness = 2
+            color = (0, 255, 0)  # Green color for text
+            text = f'Predicted Class: {predicted_class}'
+            original_text = f'Original Class: {original_class}'
+            position = (10, 30)
+
+            # img_np = cv2.cvtColor(img_np, cv2.COLOR_BGR2RGB)
+            img_np = img_np.copy()
+            
+            cv2.putText(img_np, text, position, font, font_scale, color, font_thickness)
+            cv2.putText(img_np, original_text, (10, 100), font, font_scale, color, font_thickness)
+
+
+            # Save the image with the predicted class
+            save_path = f'predicted_image_{batch}.jpg'
+            cv2.imwrite(save_path, cv2.cvtColor(np.uint8(img_np), cv2.COLOR_BGR2RGB))
+
+
+            ############################################
+
 def weight_mgt(score, epoch):
     # hyperparameter selection based on validation set
     global benchmark
@@ -364,6 +411,9 @@ for video_dataset in test_dataset:
     test_dataloader = DataLoader(video_dataset, batch_size=batch_size, shuffle=False, prefetch_factor=3*batch_size, num_workers=3, pin_memory=True, persistent_workers=True, drop_last=False)
     test_dataloaders.append(test_dataloader)
 print("Dataset loaded ...")
+
+infer_dataset = SarasDataset(img_dir='/test/', label_file='triple_labels.json')
+infer_dataloader = DataLoader(infer_dataset, batch_size=batch_size, shuffle=False, prefetch_factor=3*batch_size, num_workers=3, pin_memory=True, persistent_workers=True, drop_last=False)
 
 
 #%% class weight balancing
@@ -519,6 +569,12 @@ if is_test:
     print(f':::::: : {mAP_i["mAP"]:.4f} | {mAP_v["mAP"]:.4f} | {mAP_t["mAP"]:.4f} | {mAP_iv["mAP"]:.4f} | {mAP_it["mAP"]:.4f} | {mAP_ivt["mAP"]:.4f} ', file=open(logfile, 'a+'))
     print('='*50, file=open(logfile, 'a+'))
     print("Test results saved @ ", logfile)
+
+if is_infer:
+    print("Test weight used: ", test_ckpt)
+    model.load_state_dict(torch.load(test_ckpt))
+    for test_dataloader in test_dataloaders:
+        infer_loop(test_dataloader, model, activation, final_eval=True)
 
 #%% End
 print("All done!\nShutting done...\nIt is what it is ...\nC'est finis! {}".format("-"*maxlen) , file=open(logfile, 'a+'))
