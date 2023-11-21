@@ -62,6 +62,7 @@ parser.add_argument('--decoder_layer', type=int, default=8, help='Number of MHMA
 # job
 parser.add_argument('-t', '--train', action='store_true', help='to train.')
 parser.add_argument('-e', '--test',  action='store_true', help='to test')
+parser.add_argument('-i', '--infer',  action='store_true', help='to infer')
 parser.add_argument('--val_interval', type=int, default=1,  help='(for hp tuning). Epoch interval to evaluate on validation data. set -1 for only after final epoch, or a number higher than the total epochs to not validate.')
 # data
 parser.add_argument('--data_dir', type=str, default='/path/to/dataset', help='path to dataset?')
@@ -96,6 +97,7 @@ FLAGS, unparsed = parser.parse_known_args()
 #%% @params definitions
 is_train        = FLAGS.train
 is_test         = FLAGS.test
+is_infer        = FLAGS.infer
 dataset_variant = FLAGS.dataset_variant
 data_dir        = FLAGS.data_dir
 kfold           = FLAGS.kfold if "crossval" in dataset_variant else 0
