@@ -226,7 +226,7 @@ class T50(Dataset):
             phase = label[14:15]
             if phase[0] != -1.0:
                 phase_label[phase[0]] += 1
-        return (triplet_label, tool_label, verb_label, target_label, phase_label)
+        return (tool_label, verb_label, target_label, triplet_label)
     
     def __getitem__(self, index):        
         labels   = self.label_data[self.frames[index]]
