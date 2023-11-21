@@ -329,9 +329,9 @@ def infer_loop(dataloader, model, activation, final_eval=False):
     num_batches = len(dataloader)
     classes = dataloader.dataset.classes
     with torch.no_grad():
-        for batch, (img, (y1, y2, y3, y4)) in enumerate(dataloader):
+        for batch, (img) in enumerate(dataloader):
             # img_np = img
-            img= img.cuda()            
+            img = img.cuda()            
             model.eval()  
             tool, verb, target, triplet = model(img)
 
