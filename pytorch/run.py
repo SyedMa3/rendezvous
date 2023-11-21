@@ -288,7 +288,7 @@ def test_loop(dataloader, model, activation, final_eval=False):
             font_thickness = 2
             color = (0, 255, 0)  # Green color for text
             text = f'Predicted Class: {predicted_class}'
-            original_text = f'Original Class: {original_class}
+            original_text = f'Original Class: {original_class}'
             position = (100, 30)
 
             # img_np = cv2.cvtColor(img_np, cv2.COLOR_BGR2RGB)
