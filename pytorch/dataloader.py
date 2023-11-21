@@ -195,7 +195,7 @@ class CholecT50():
 class T50(Dataset):
     def __init__(self, img_dir, label_file, transform=None, target_transform=None):
         label_data = json.load(open(label_file, "rb"))
-        self.label_data = label_data["annotations"]
+        self.label_data = label_data
         self.frames = self.label_data.keys()
         self.img_dir = img_dir
         self.transform = transform
