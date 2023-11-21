@@ -273,8 +273,9 @@ def test_loop(dataloader, model, activation, final_eval=False):
             ############################################
             # Assuming triplet is a tensor of shape (batch_size, num_classes)
             _, predicted_class = torch.max(triplet, 1)
+            _, original_class = torch.max(y4, 1)
             predicted_class = classes[str(predicted_class.item())]  # Get the predicted class index
-            original_class = classes[str(y4)]
+            original_class = classes[str(original_class.item())]
 
             # Convert the PyTorch tensor to a NumPy array
             file_name = "0"*6
