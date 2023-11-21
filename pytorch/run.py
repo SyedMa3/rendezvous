@@ -256,6 +256,7 @@ def test_loop(dataloader, model, activation, final_eval=False):
     size = len(dataloader.dataset)
     num_batches = len(dataloader)
     classes = dataloader.dataset.classes
+    frames = dataloader.dataset.frames
     mAP.reset()  
     if final_eval and not set_chlg_eval:
         mAPv.reset() 
@@ -275,8 +276,10 @@ def test_loop(dataloader, model, activation, final_eval=False):
             predicted_class = classes[str(predicted_class.item())]  # Get the predicted class index
             
             # Convert the PyTorch tensor to a NumPy array
-            img_np = img.squeeze().permute(1, 2, 0).cpu().numpy()
-            # print(img_np.shape)
+            file_name = "0"*6
+            file_name = file_name[:-frames[batch]] + frames[batch] + ".png"
+            print(file_name)
+            img_np = cv2.imread(f'cholect50-challenge-val/videos/VID68/{file_name}')
             
             # Draw the predicted class on the image
             font = cv2.FONT_HERSHEY_SIMPLEX
