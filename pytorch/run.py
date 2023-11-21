@@ -414,7 +414,7 @@ torch.autograd.profiler.emit_nvtx(False)
 #     test_dataloaders.append(test_dataloader)
 # print("Dataset loaded ...")
 
-infer_dataset = SarasDataset(img_dir='/test/', label_file='triple_labels.json')
+infer_dataset = dataloader.SarasDataset(img_dir='/test/', label_file='triple_labels.json')
 infer_dataloader = DataLoader(infer_dataset, batch_size=batch_size, shuffle=False, prefetch_factor=3*batch_size, num_workers=3, pin_memory=True, persistent_workers=True, drop_last=False)
 
 
