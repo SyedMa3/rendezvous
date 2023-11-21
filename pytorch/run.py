@@ -328,6 +328,7 @@ def infer_loop(dataloader, model, activation, final_eval=False):
     size = len(dataloader.dataset)
     num_batches = len(dataloader)
     classes = dataloader.dataset.classes
+    images = dataloader.dataset.images
     with torch.no_grad():
         for batch, (img) in enumerate(dataloader):
             # img_np = img
@@ -344,9 +345,9 @@ def infer_loop(dataloader, model, activation, final_eval=False):
             # original_class = classes[str(original_class.item())]
 
             # Convert the PyTorch tensor to a NumPy array
-            file_name = "0"*6
-            file_name = file_name[:-len(frames[batch])] + frames[batch] + ".png"
-            img_np = cv2.imread(f'cholect50-challenge-val/videos/VID68/{file_name}')
+            file_name = images[batch]
+            # file_name = file_name[:-len(frames[batch])] + frames[batch] + ".png"
+            img_np = cv2.imread(f'test/{file_name}')
             
             # Draw the predicted class on the image
             font = cv2.FONT_HERSHEY_SIMPLEX
