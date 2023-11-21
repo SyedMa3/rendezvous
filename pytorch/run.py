@@ -274,7 +274,8 @@ def test_loop(dataloader, model, activation, final_eval=False):
             # Assuming triplet is a tensor of shape (batch_size, num_classes)
             _, predicted_class = torch.max(triplet, 1)
             predicted_class = classes[str(predicted_class.item())]  # Get the predicted class index
-            
+            original_class = classes[str(y4)]
+
             # Convert the PyTorch tensor to a NumPy array
             file_name = "0"*6
             file_name = file_name[:-len(frames[batch])] + frames[batch] + ".png"
@@ -287,12 +288,15 @@ def test_loop(dataloader, model, activation, final_eval=False):
             font_thickness = 2
             color = (0, 255, 0)  # Green color for text
             text = f'Predicted Class: {predicted_class}'
-            position = (10, 30)
+            original_text = f'Original Class: {original_class}
+            position = (100, 30)
 
             # img_np = cv2.cvtColor(img_np, cv2.COLOR_BGR2RGB)
             img_np = img_np.copy()
             
             cv2.putText(img_np, text, position, font, font_scale, color, font_thickness)
+            cv2.putText(img_np, original_text, position, font, font_scale, color, font_thickness)
+
 
             # Save the image with the predicted class
             save_path = f'predicted_image_{batch}.jpg'
