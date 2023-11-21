@@ -267,7 +267,9 @@ def test_loop(dataloader, model, activation, final_eval=False):
 
 
             ############################################
-            img_np = img.squeeze().permute(1, 2, 0).cpu().numpy()
+            triplet_info = triplet.cpu().numpy()
+
+            img_np = img.squeeze().cpu().numpy()
         
             # Scale the values in triplet_info to the range [0, 255] for display
             triplet_info_display = (triplet_info - np.min(triplet_info)) / (np.max(triplet_info) - np.min(triplet_info)) * 255
