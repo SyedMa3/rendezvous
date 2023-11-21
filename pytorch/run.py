@@ -286,6 +286,7 @@ def test_loop(dataloader, model, activation, final_eval=False):
             position = (10, 30)
 
             # img_np = cv2.cvtColor(img_np, cv2.COLOR_BGR2RGB)
+            img_np = img_np.copy()
             
             cv2.putText(img_np, text, position, font, font_scale, color, font_thickness)
 
