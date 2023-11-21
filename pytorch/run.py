@@ -574,9 +574,8 @@ if is_test:
 
 if is_infer:
     print("Test weight used: ", test_ckpt)
-    model.load_state_dict(torch.load(test_ckpt))
-    for test_dataloader in test_dataloaders:
-        infer_loop(test_dataloader, model, activation, final_eval=True)
+    model.load_state_dict(torch.load(test_ckpt)
+    infer_loop(infer_dataloader, model, activation, final_eval=True)
 
 #%% End
 print("All done!\nShutting done...\nIt is what it is ...\nC'est finis! {}".format("-"*maxlen) , file=open(logfile, 'a+'))
