@@ -393,26 +393,26 @@ torch.autograd.profiler.emit_nvtx(False)
 
 
 #%% data loading : variant and split selection (Note: original paper used different augumentation per epoch)
-dataset = dataloader.CholecT50( 
-            dataset_dir=data_dir, 
-            dataset_variant=dataset_variant,
-            test_fold=kfold,
-            augmentation_list=data_augmentations,
-            )
+# dataset = dataloader.CholecT50( 
+#             dataset_dir=data_dir, 
+#             dataset_variant=dataset_variant,
+#             test_fold=kfold,
+#             augmentation_list=data_augmentations,
+#             )
 
-# build dataset
-train_dataset, val_dataset, test_dataset = dataset.build()
+# # build dataset
+# train_dataset, val_dataset, test_dataset = dataset.build()
 
-# train and val data loaders
-train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, prefetch_factor=3*batch_size, num_workers=3, pin_memory=True, persistent_workers=True, drop_last=False)
-val_dataloader   = DataLoader(val_dataset, batch_size=batch_size, shuffle=True, prefetch_factor=3*batch_size, num_workers=3, pin_memory=True, persistent_workers=True, drop_last=False)
+# # train and val data loaders
+# train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, prefetch_factor=3*batch_size, num_workers=3, pin_memory=True, persistent_workers=True, drop_last=False)
+# val_dataloader   = DataLoader(val_dataset, batch_size=batch_size, shuffle=True, prefetch_factor=3*batch_size, num_workers=3, pin_memory=True, persistent_workers=True, drop_last=False)
  
-# test data set is built per video, so load differently
-test_dataloaders = []
-for video_dataset in test_dataset:
-    test_dataloader = DataLoader(video_dataset, batch_size=batch_size, shuffle=False, prefetch_factor=3*batch_size, num_workers=3, pin_memory=True, persistent_workers=True, drop_last=False)
-    test_dataloaders.append(test_dataloader)
-print("Dataset loaded ...")
+# # test data set is built per video, so load differently
+# test_dataloaders = []
+# for video_dataset in test_dataset:
+#     test_dataloader = DataLoader(video_dataset, batch_size=batch_size, shuffle=False, prefetch_factor=3*batch_size, num_workers=3, pin_memory=True, persistent_workers=True, drop_last=False)
+#     test_dataloaders.append(test_dataloader)
+# print("Dataset loaded ...")
 
 infer_dataset = SarasDataset(img_dir='/test/', label_file='triple_labels.json')
 infer_dataloader = DataLoader(infer_dataset, batch_size=batch_size, shuffle=False, prefetch_factor=3*batch_size, num_workers=3, pin_memory=True, persistent_workers=True, drop_last=False)
