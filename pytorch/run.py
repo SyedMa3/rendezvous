@@ -284,10 +284,11 @@ def test_loop(dataloader, model, activation, final_eval=False):
             text = f'Predicted Class: {predicted_class}'
             position = (10, 30)
             
-            cv2.putText(output_img, f'Triplet: {triplet_info}', (10, 30), font, 1, (255, 255, 255), 2, cv2.LINE_AA)
+            cv2.putText(img_np, text, position, font, font_scale, color, font_thickness)
 
-            # Save the image
-            cv2.imwrite(f'output_image_{batch}.png', output_img)
+            # Save the image with the predicted class
+            save_path = f'predicted_image_{batch}.jpg'
+            cv2.imwrite(save_path, cv2.cvtColor(np.uint8(img_np * 255), cv2.COLOR_RGB2BGR))
 
 
             ############################################
