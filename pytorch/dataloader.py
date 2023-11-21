@@ -246,7 +246,7 @@ class SarasDataset(Dataset):
     def __init__(self, img_dir, label_file, transform=None, target_transform=None):
         label_data = json.load(open(label_file, "rb"))
         self.classes = label_data["categories"]["triplet"]
-
+        self.normalize = True
         self.img_dir = img_dir
         self.transform = self.get_transform()
         self.images = [os.path.join(root_dir, img) for img in os.listdir(root_dir)]
