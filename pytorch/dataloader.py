@@ -266,7 +266,6 @@ class SarasDataset(Dataset):
         op_test   = [transforms.Resize((256, 448)), transforms.ToTensor(), ]
         if self.normalize:
             op_test.append(normalize)
-            op_train.append(normalize)
         testform  = transforms.Compose(op_test)
         return testform
 
