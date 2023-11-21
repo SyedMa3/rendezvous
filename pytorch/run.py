@@ -275,7 +275,7 @@ def test_loop(dataloader, model, activation, final_eval=False):
             
             # Convert the PyTorch tensor to a NumPy array
             img_np = img.squeeze().permute(1, 2, 0).cpu().numpy()
-            print(img_np.shape)
+            # print(img_np.shape)
             
             # Draw the predicted class on the image
             font = cv2.FONT_HERSHEY_SIMPLEX
@@ -291,7 +291,7 @@ def test_loop(dataloader, model, activation, final_eval=False):
 
             # Save the image with the predicted class
             save_path = f'predicted_image_{batch}.jpg'
-            cv2.imwrite(save_path, img_np)
+            cv2.imwrite(save_path, cv2.cvtColor(np.uint8(img_np), cv2.COLOR_RGB2BGR))
 
 
             ############################################
