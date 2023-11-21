@@ -280,7 +280,6 @@ def test_loop(dataloader, model, activation, final_eval=False):
             # Convert the PyTorch tensor to a NumPy array
             file_name = "0"*6
             file_name = file_name[:-len(frames[batch])] + frames[batch] + ".png"
-            print(file_name)
             img_np = cv2.imread(f'cholect50-challenge-val/videos/VID68/{file_name}')
             
             # Draw the predicted class on the image
