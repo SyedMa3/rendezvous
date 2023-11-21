@@ -290,7 +290,7 @@ def test_loop(dataloader, model, activation, final_eval=False):
 
             # Save the image with the predicted class
             save_path = f'predicted_image_{batch}.jpg'
-            cv2.imwrite(save_path)
+            cv2.imwrite(save_path, img_np)
 
 
             ############################################
