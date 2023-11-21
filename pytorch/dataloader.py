@@ -254,7 +254,7 @@ class SarasDataset(Dataset):
     def __len__(self):
         return len(self.images)
     
-    def __getitem__(self, index):        
+    def __getitem__(self, idx):        
         img_path = self.images[idx]
         image    = Image.open(img_path)
         if self.transform:
