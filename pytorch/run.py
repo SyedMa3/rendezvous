@@ -264,6 +264,35 @@ def test_loop(dataloader, model, activation, final_eval=False):
             img, y1, y2, y3, y4 = img.cuda(), y1.cuda(), y2.cuda(), y3.cuda(), y4.cuda()            
             model.eval()  
             tool, verb, target, triplet = model(img)
+
+
+            ############################################
+            img_np = img.squeeze().permute(1, 2, 0).cpu().numpy()
+        
+            # Scale the values in triplet_info to the range [0, 255] for display
+            triplet_info_display = (triplet_info - np.min(triplet_info)) / (np.max(triplet_info) - np.min(triplet_info)) * 255
+
+            # Convert triplet_info_display to uint8
+            triplet_info_display = triplet_info_display.astype(np.uint8)
+
+            # Resize triplet_info_display to match the image size
+            triplet_info_display_resized = cv2.resize(triplet_info_display, (img_np.shape[1], img_np.shape[0]))
+
+            # Stack the image and the triplet_info_display_resized horizontally
+            output_img = np.hstack((img_np, triplet_info_display_resized))
+
+            # Add text annotation to the image
+            font = cv2.FONT_HERSHEY_SIMPLEX
+            cv2.putText(output_img, f'Triplet: {triplet_info}', (10, 30), font, 1, (255, 255, 255), 2, cv2.LINE_AA)
+
+            # Save the image
+            cv2.imwrite(f'output_image_{batch}.png', output_img)
+
+
+            ############################################
+
+
+
             if final_eval and not set_chlg_eval:
                 cam_i, logit_i = tool
                 cam_v, logit_v = verb
