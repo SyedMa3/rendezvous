@@ -366,7 +366,8 @@ def infer_loop(dataloader, model, activation, final_eval=False):
 
 
             # Save the image with the predicted class
-            save_path = f'pred_{file_name.split('/')[-1]}}'
+            output_name = file_name.split('/')[-1]
+            save_path = f'pred_{output_name}}'
             cv2.imwrite(save_path, cv2.cvtColor(np.uint8(img_np), cv2.COLOR_BGR2RGB))
 
 
