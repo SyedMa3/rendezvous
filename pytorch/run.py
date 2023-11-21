@@ -339,9 +339,9 @@ def infer_loop(dataloader, model, activation, final_eval=False):
             ############################################
             # Assuming triplet is a tensor of shape (batch_size, num_classes)
             _, predicted_class = torch.max(triplet, 1)
-            _, original_class = torch.max(y4, 1)
+            # _, original_class = torch.max(y4, 1)
             predicted_class = classes[str(predicted_class.item())]  # Get the predicted class index
-            original_class = classes[str(original_class.item())]
+            # original_class = classes[str(original_class.item())]
 
             # Convert the PyTorch tensor to a NumPy array
             file_name = "0"*6
@@ -354,14 +354,14 @@ def infer_loop(dataloader, model, activation, final_eval=False):
             font_thickness = 2
             color = (0, 255, 0)  # Green color for text
             text = f'Predicted Class: {predicted_class}'
-            original_text = f'Original Class: {original_class}'
+            # original_text = f'Original Class: {original_class}'
             position = (10, 30)
 
             # img_np = cv2.cvtColor(img_np, cv2.COLOR_BGR2RGB)
             img_np = img_np.copy()
             
             cv2.putText(img_np, text, position, font, font_scale, color, font_thickness)
-            cv2.putText(img_np, original_text, (10, 100), font, font_scale, color, font_thickness)
+            # cv2.putText(img_np, original_text, (10, 100), font, font_scale, color, font_thickness)
 
 
             # Save the image with the predicted class
